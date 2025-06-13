@@ -33,5 +33,17 @@
     <ClCompile Include="message.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="persistence.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="compress.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="update_exe.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="hash.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -128,12 +128,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="compress.c" />
     <ClCompile Include="functions.c" />
+    <ClCompile Include="hash.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="header.h" />
     <ClCompile Include="message.c" />
     <ClCompile Include="network.c" />
+    <ClCompile Include="persistence.c" />
     <ClCompile Include="read_command.c" />
+    <ClCompile Include="update_exe.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

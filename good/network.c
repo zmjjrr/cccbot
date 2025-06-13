@@ -1,10 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <stdio.h>
-#include <windows.h>
-
-#pragma comment(lib, "Ws2_32.lib")
+#include "header.h"
 
 SOCKET TCPhandler(const char* server, const char* baseNick)
 {
