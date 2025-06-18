@@ -21,14 +21,17 @@ void appendToBuffer(MessageBuffer* mb, SOCKET sock, const char* message) {
         if (mb->length > 0) { // 确保有内容可发送
             // 替换内部换行符为空格（IRC消息中换行符表示消息结束）
             char* escapedBuffer = strdup(mb->buffer);
+
             for (char* p = escapedBuffer; *p; p++) {
                 if (*p == '\n') *p = ' '; // 将内部换行替换为空格
             }
 
             char sendBuf[DEFAULT_BUFLEN];
+
             snprintf(sendBuf, sizeof(sendBuf), "PRIVMSG %s :%s\r\n", mb->target, escapedBuffer);
+
             send(sock, sendBuf, (int)strlen(sendBuf), 0);
-            printf("Send:\n%s\n", sendBuf);
+            bot_log("Send:\n%s\n", sendBuf);
 
             free(escapedBuffer);
 
@@ -62,9 +65,11 @@ void flushBuffer(MessageBuffer* mb, SOCKET sock) {
         }
 
         char sendBuf[DEFAULT_BUFLEN];
+
         snprintf(sendBuf, sizeof(sendBuf), "PRIVMSG %s :%s\r\n", mb->target, escapedBuffer);
+
         send(sock, sendBuf, (int)strlen(sendBuf), 0);
-        printf("Send (flush):\n%s\n", sendBuf);
+        bot_log("Send :\n%s\n", escapedBuffer);
 
         free(escapedBuffer);
 

