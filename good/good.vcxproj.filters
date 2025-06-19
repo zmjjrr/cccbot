@@ -36,13 +36,25 @@
     <ClCompile Include="persistence.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="compress.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="update_exe.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="hash.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="log.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="file.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="unicode.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="screenshot.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="http_upload.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

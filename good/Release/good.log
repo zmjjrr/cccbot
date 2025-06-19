@@ -1,10 +1,27 @@
-﻿  main.c
+﻿cl : 命令行  warning D9025: 正在重写“/sdl”(用“/GS-”)
+  file.c
+D:\VSprojects\good\good\file.c(262,39): warning C4018: “<”: 有符号/无符号不匹配
+  functions.c
+D:\VSprojects\good\good\functions.c(161,9): warning C4013: “_getcwd”未定义；假设外部返回 int
+D:\VSprojects\good\good\functions.c(161,41): warning C4047: “==”:“int”与“void *”的间接级别不同
+D:\VSprojects\good\good\functions.c(171,9): warning C4013: “_chdir”未定义；假设外部返回 int
+  hash.c
+  http_upload.c
+  log.c
+  main.c
+  message.c
+  network.c
   persistence.c
-D:\VSprojects\good\good\persistence.c(119,9): warning C4013: “set_registry_persistence”未定义；假设外部返回 int
+D:\VSprojects\good\good\persistence.c(100,9): warning C4013: “set_registry_persistence”未定义；假设外部返回 int
+  read_command.c
+  screenshot.c
+  unicode.c
   update_exe.c
+cl : 命令行  warning D9025: 正在重写“/sdl”(用“/GS-”)
+  header.h
   正在生成代码
-  4 of 38 functions (10.5%) were compiled, the rest were copied from previous compilation.
+  22 of 53 functions (41.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    21 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   good.vcxproj -> D:\VSprojects\good\Release\good.exe

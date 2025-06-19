@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,15 +129,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="compress.c" />
+    <ClCompile Include="file.c" />
     <ClCompile Include="functions.c" />
     <ClCompile Include="hash.c" />
+    <ClCompile Include="http_upload.c" />
+    <ClCompile Include="log.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="header.h" />
     <ClCompile Include="message.c" />
     <ClCompile Include="network.c" />
     <ClCompile Include="persistence.c" />
     <ClCompile Include="read_command.c" />
+    <ClCompile Include="screenshot.c" />
+    <ClCompile Include="unicode.c" />
     <ClCompile Include="update_exe.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,10 +1,14 @@
-D:\VSprojects\good\good\compress.c;D:\VSprojects\good\good\Release\compress.obj
+D:\VSprojects\good\good\file.c;D:\VSprojects\good\good\Release\file.obj
 D:\VSprojects\good\good\functions.c;D:\VSprojects\good\good\Release\functions.obj
 D:\VSprojects\good\good\hash.c;D:\VSprojects\good\good\Release\hash.obj
+D:\VSprojects\good\good\http_upload.c;D:\VSprojects\good\good\Release\http_upload.obj
+D:\VSprojects\good\good\log.c;D:\VSprojects\good\good\Release\log.obj
 D:\VSprojects\good\good\main.c;D:\VSprojects\good\good\Release\main.obj
 D:\VSprojects\good\good\header.h;D:\VSprojects\good\good\Release\header.obj
 D:\VSprojects\good\good\message.c;D:\VSprojects\good\good\Release\message.obj
 D:\VSprojects\good\good\network.c;D:\VSprojects\good\good\Release\network.obj
 D:\VSprojects\good\good\persistence.c;D:\VSprojects\good\good\Release\persistence.obj
 D:\VSprojects\good\good\read_command.c;D:\VSprojects\good\good\Release\read_command.obj
+D:\VSprojects\good\good\screenshot.c;D:\VSprojects\good\good\Release\screenshot.obj
+D:\VSprojects\good\good\unicode.c;D:\VSprojects\good\good\Release\unicode.obj
 D:\VSprojects\good\good\update_exe.c;D:\VSprojects\good\good\Release\update_exe.obj
