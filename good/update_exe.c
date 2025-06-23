@@ -9,7 +9,7 @@ int update_exe(char* path) {
     char temp_path[MAX_PATH];
     GetTempPathA(MAX_PATH, temp_path);
     char bat_path[MAX_PATH];
-    sprintf_s(bat_path, MAX_PATH, "%supdate_launcher.bat", temp_path);
+    sprintf_s(bat_path, MAX_PATH, "%update_launcher.bat", temp_path);
 
     FILE* fp = NULL;
     fopen_s(&fp, bat_path, "w");

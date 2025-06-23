@@ -6,14 +6,14 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
     {
-        printf("WSAStartup failed\n");
+        bot_log("WSAStartup failed\n");
         return INVALID_SOCKET;
     }
 
     SOCKET tcpsock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (tcpsock == INVALID_SOCKET)
     {
-        printf("Socket creation failed\n");
+        bot_log("Socket creation failed\n");
         WSACleanup();
         return INVALID_SOCKET;
     }
@@ -30,7 +30,7 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
     int result = getaddrinfo(server, port, &hints, &res);
     if (result != 0)
     {
-        printf("getaddrinfo failed: %d\n", result);
+        bot_log("getaddrinfo failed: %d\n", result);
         closesocket(tcpsock);
         WSACleanup();
         return INVALID_SOCKET;
@@ -39,7 +39,7 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
     // 尝试连接第一个可用地址
     if (connect(tcpsock, res->ai_addr, (int)res->ai_addrlen) == SOCKET_ERROR)
     {
-        printf("Connection to IRC server failed\n");
+        bot_log("Connection to IRC server failed\n");
         freeaddrinfo(res);
         closesocket(tcpsock);
         WSACleanup();
@@ -48,7 +48,7 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
 
     freeaddrinfo(res);
 
-    printf("Connected to IRC server: %s\n", server);
+    bot_log("Connected to IRC server: %s\n", server);
 
     // 动态生成昵称
     char nick[128];
@@ -74,7 +74,7 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
         while (tried < 10) {
             int n = recv(tcpsock, buf, sizeof(buf) - 1, 0);
             if (n <= 0) {
-                printf("Connection closed during handshake.\n");
+                bot_log("Connection closed during handshake.\n");
                 closesocket(tcpsock);
                 WSACleanup();
                 return INVALID_SOCKET;
@@ -92,13 +92,13 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
 
             // 检查是否昵称被占用
             if (strstr(buf, "433")) { // ERR_NICKNAMEINUSE
-                printf("[!] Nickname '%s' is already in use. Trying next...\n", nick);
+                bot_log("[!] Nickname '%s' is already in use. Trying next...\n", nick);
                 break; // 退出当前循环，尝试下一个昵称
             }
 
             // 成功注册（RPL_WELCOME）
             if (strstr(buf, "001")) {
-                printf("[+] Connected with nickname: %s\n", nick);
+                bot_log("[+] Connected with nickname: %s\n", nick);
                 connected = 1;
                 break;
             }
@@ -116,7 +116,7 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
     }
 
     if (!connected) {
-        printf("[!] Failed to register nickname after multiple attempts\n");
+        bot_log("[!] Failed to register nickname after multiple attempts\n");
         closesocket(tcpsock);
         WSACleanup();
         return INVALID_SOCKET;
@@ -125,4 +125,80 @@ SOCKET TCPhandler(const char* server, const char* baseNick)
 
 
     return tcpsock;
+}
+
+int check_join_success(SOCKET ircsock, const char* channel, DWORD timeout_ms) {
+    char buffer[1024];
+    DWORD startTime = GetTickCount();
+
+    while (GetTickCount() - startTime < timeout_ms) {
+        int received = recv(ircsock, buffer, sizeof(buffer) - 1, 0);
+        if (received <= 0) {
+            bot_log("Connection closed during JOIN check.\n");
+            return -1; // Connection lost
+        }
+
+        buffer[received] = '\0'; // Null-terminate
+        bot_log("JOIN Response: %s", buffer); // Optional log
+
+        // Look for successful JOIN
+        if (strstr(buffer, "JOIN") && strstr(buffer, channel)) {
+            bot_log("Successfully joined channel: %s\n", channel);
+            return 1; // Success
+        }
+        
+        // send heartbeat
+        if (strncmp(buffer, "PING", 4) == 0) {
+            char pong[512];
+            snprintf(pong, sizeof(pong), "PONG%s\r\n", buffer + 4);
+            send(ircsock, pong, (int)strlen(pong), 0);
+            continue;
+        }
+
+        // Error codes
+        if (strstr(buffer, "403")) {
+            bot_log("Error: No such channel or cannot join %s\n", channel);
+            return 0;
+        }
+        if (strstr(buffer, "475")) {
+            bot_log("Error: Bad channel key for %s\n", channel);
+            return 0;
+        }
+        if (strstr(buffer, "473")) {
+            bot_log("Error: Channel %s is invite-only\n", channel);
+            return 0;
+        }
+        if (strstr(buffer, "471")) {
+            bot_log("Error: Cannot join %s, channel is full\n", channel);
+            return 0;
+        }
+        if (strstr(buffer, "474")) {
+            bot_log("Error: You are banned from %s\n", channel);
+            return 0;
+        }
+
+        // Reset buffer
+        memset(buffer, 0, sizeof(buffer));
+    }
+
+    bot_log("Timeout waiting for JOIN confirmation.\n");
+    return -1; // Timeout
+}
+
+int join_channel(const char* channel) {
+    char joinCmd[128];
+    snprintf(joinCmd, sizeof(joinCmd), "JOIN %s\r\n", channel);
+    send(ircsock, joinCmd, (int)strlen(joinCmd), 0);
+
+    int joinResult = check_join_success(ircsock, channel, 5000); // Wait up to 5 seconds
+    if (joinResult != 1) {
+        bot_log("Failed to join channel: %s\n", channel);
+        closesocket(ircsock);
+        return -1;
+    }
+
+    char privmsg[512];
+    snprintf(privmsg, sizeof(privmsg), "PRIVMSG %s :Bot is online\r\n", channel);
+    send(ircsock, privmsg, (int)strlen(privmsg), 0);
+    return 0;
 }
