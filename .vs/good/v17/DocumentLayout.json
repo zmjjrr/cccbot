@@ -3,32 +3,8 @@
   "WorkspaceRootPath": "D:\\VSprojects\\good\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\webcame.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\webcame.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\screenshot.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\screenshot.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\unicode.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\unicode.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\read_command.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\read_command.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\persistence.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\persistence.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\network.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -37,6 +13,42 @@
     {
       "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\log.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\log.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\message.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\message.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\update_exe.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\update_exe.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\header.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\persistence.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\persistence.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\webcame.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\webcame.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\functions.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\functions.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\read_command.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\read_command.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\screenshot.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\screenshot.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\unicode.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\unicode.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\keylogger.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -49,18 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\http_upload.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\http_upload.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\functions.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\functions.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\update_exe.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\update_exe.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\message.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|solutionrelative:good\\message.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CCAC7564-EED0-4CB4-836E-B1F2122594AB}|good\\good.vcxproj|D:\\VSprojects\\good\\good\\hash.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -77,151 +77,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "webcame.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\webcame.c",
-              "RelativeDocumentMoniker": "good\\webcame.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\webcame.c",
-              "RelativeToolTip": "good\\webcame.c",
-              "ViewState": "AgIAADIAAAAAAAAAAAAowEEAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-23T14:36:38.143Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "keylogger.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\keylogger.c",
-              "RelativeDocumentMoniker": "good\\keylogger.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\keylogger.c",
-              "RelativeToolTip": "good\\keylogger.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-23T10:52:53.218Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "main.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\main.c",
-              "RelativeDocumentMoniker": "good\\main.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\main.c",
-              "RelativeToolTip": "good\\main.c",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAAAFYAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-04-17T09:45:34.396Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "header.h",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\header.h",
-              "RelativeDocumentMoniker": "good\\header.h",
-              "ToolTip": "D:\\VSprojects\\good\\good\\header.h",
-              "RelativeToolTip": "good\\header.h",
-              "ViewState": "AgIAAI4AAAAAAAAAAAAswJ4AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-10T15:24:23.955Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "log.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\log.c",
-              "RelativeDocumentMoniker": "good\\log.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\log.c",
-              "RelativeToolTip": "good\\log.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-17T08:14:31.292Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "network.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\network.c",
-              "RelativeDocumentMoniker": "good\\network.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\network.c",
-              "RelativeToolTip": "good\\network.c",
-              "ViewState": "AgIAALUAAAAAAAAAAAAswMUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-04-18T14:27:25.383Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "screenshot.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\screenshot.c",
-              "RelativeDocumentMoniker": "good\\screenshot.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\screenshot.c",
-              "RelativeToolTip": "good\\screenshot.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-18T16:17:36.789Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "read_command.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\read_command.c",
-              "RelativeDocumentMoniker": "good\\read_command.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\read_command.c",
-              "RelativeToolTip": "good\\read_command.c",
-              "ViewState": "AgIAAOkAAAAAAAAAAAAowPQAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-04-18T10:30:29.061Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "unicode.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\unicode.c",
-              "RelativeDocumentMoniker": "good\\unicode.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\unicode.c",
-              "RelativeToolTip": "good\\unicode.c",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-17T12:22:04.939Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "file.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\file.c",
-              "RelativeDocumentMoniker": "good\\file.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\file.c",
-              "RelativeToolTip": "good\\file.c",
-              "ViewState": "AgIAAAsBAAAAAAAAAAAqwCIBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-17T12:19:17.812Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "http_upload.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\http_upload.c",
-              "RelativeDocumentMoniker": "good\\http_upload.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\http_upload.c",
-              "RelativeToolTip": "good\\http_upload.c",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAowCUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-19T04:23:01.007Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 6,
@@ -230,46 +87,187 @@
               "RelativeDocumentMoniker": "good\\persistence.c",
               "ToolTip": "D:\\VSprojects\\good\\good\\persistence.c",
               "RelativeToolTip": "good\\persistence.c",
-              "ViewState": "AgIAAJEAAAAAAAAAAAAowKgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAowJYAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-06-13T01:45:26.343Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 8,
               "Title": "functions.c",
               "DocumentMoniker": "D:\\VSprojects\\good\\good\\functions.c",
               "RelativeDocumentMoniker": "good\\functions.c",
               "ToolTip": "D:\\VSprojects\\good\\good\\functions.c",
               "RelativeToolTip": "good\\functions.c",
-              "ViewState": "AgIAAKsAAAAAAAAAAAAowMIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAswEkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-04-18T10:40:00.945Z"
+              "WhenOpened": "2025-04-18T10:40:00.945Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "update_exe.c",
-              "DocumentMoniker": "D:\\VSprojects\\good\\good\\update_exe.c",
-              "RelativeDocumentMoniker": "good\\update_exe.c",
-              "ToolTip": "D:\\VSprojects\\good\\good\\update_exe.c",
-              "RelativeToolTip": "good\\update_exe.c",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAAsAAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-13T08:38:22.69Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 3,
               "Title": "message.c",
               "DocumentMoniker": "D:\\VSprojects\\good\\good\\message.c",
               "RelativeDocumentMoniker": "good\\message.c",
               "ToolTip": "D:\\VSprojects\\good\\good\\message.c",
               "RelativeToolTip": "good\\message.c",
-              "ViewState": "AgIAADwAAAAAAAAAAAAowFMAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2025-06-10T15:16:17.922Z"
+              "WhenOpened": "2025-06-10T15:16:17.922Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\main.c",
+              "RelativeDocumentMoniker": "good\\main.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\main.c",
+              "RelativeToolTip": "good\\main.c",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAswKIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-04-17T09:45:34.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "update_exe.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\update_exe.c",
+              "RelativeDocumentMoniker": "good\\update_exe.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\update_exe.c",
+              "RelativeToolTip": "good\\update_exe.c",
+              "ViewState": "AgIAACgAAAAAAAAAAAAswCQAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-13T08:38:22.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "header.h",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\header.h",
+              "RelativeDocumentMoniker": "good\\header.h",
+              "ToolTip": "D:\\VSprojects\\good\\good\\header.h",
+              "RelativeToolTip": "good\\header.h",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAswIEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-06-10T15:24:23.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "webcame.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\webcame.c",
+              "RelativeDocumentMoniker": "good\\webcame.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\webcame.c",
+              "RelativeToolTip": "good\\webcame.c",
+              "ViewState": "AgIAABEAAAAAAAAAAAAowD8AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-23T14:36:38.143Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "log.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\log.c",
+              "RelativeDocumentMoniker": "good\\log.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\log.c",
+              "RelativeToolTip": "good\\log.c",
+              "ViewState": "AgIAADQAAAAAAAAAAAAswDwAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-17T08:14:31.292Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "network.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\network.c",
+              "RelativeDocumentMoniker": "good\\network.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\network.c",
+              "RelativeToolTip": "good\\network.c",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAswL0AAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-04-18T14:27:25.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "read_command.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\read_command.c",
+              "RelativeDocumentMoniker": "good\\read_command.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\read_command.c",
+              "RelativeToolTip": "good\\read_command.c",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAswIQAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-04-18T10:30:29.061Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "unicode.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\unicode.c",
+              "RelativeDocumentMoniker": "good\\unicode.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\unicode.c",
+              "RelativeToolTip": "good\\unicode.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-17T12:22:04.939Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "screenshot.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\screenshot.c",
+              "RelativeDocumentMoniker": "good\\screenshot.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\screenshot.c",
+              "RelativeToolTip": "good\\screenshot.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-18T16:17:36.789Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "keylogger.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\keylogger.c",
+              "RelativeDocumentMoniker": "good\\keylogger.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\keylogger.c",
+              "RelativeToolTip": "good\\keylogger.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-23T10:52:53.218Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "file.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\file.c",
+              "RelativeDocumentMoniker": "good\\file.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\file.c",
+              "RelativeToolTip": "good\\file.c",
+              "ViewState": "AgIAAAsBAAAAAAAAAAAqwCIBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-17T12:19:17.812Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "http_upload.c",
+              "DocumentMoniker": "D:\\VSprojects\\good\\good\\http_upload.c",
+              "RelativeDocumentMoniker": "good\\http_upload.c",
+              "ToolTip": "D:\\VSprojects\\good\\good\\http_upload.c",
+              "RelativeToolTip": "good\\http_upload.c",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAowCUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-06-19T04:23:01.007Z"
             },
             {
               "$type": "Document",

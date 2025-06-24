@@ -35,6 +35,11 @@ HANDLE log_mutex = NULL;
 void bot_log(const char* format, ...) {
     if (!log_mutex) {
         log_mutex = CreateMutex(NULL, FALSE, NULL);
+
+    }
+
+    if (!log_mutex) {
+        return;//CreateMutex Error
     }
 
     WaitForSingleObject(log_mutex, INFINITE);
@@ -54,7 +59,7 @@ void bot_log(const char* format, ...) {
     va_end(args);
 
     // 控制台输出
-    printf("[%s] %s\n", timestamp, message);
+    //printf("[%s] %s\n", timestamp, message);
 
     // 文件输出
     FILE* fp = fopen(log_path, "a+");

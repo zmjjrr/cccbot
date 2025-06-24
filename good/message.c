@@ -31,7 +31,6 @@ void appendToBuffer(MessageBuffer* mb, SOCKET sock, const char* message) {
             snprintf(sendBuf, sizeof(sendBuf), "PRIVMSG %s :%s\r\n", mb->target, escapedBuffer);
 
             send(sock, sendBuf, (int)strlen(sendBuf), 0);
-            bot_log("Send:\n%s\n", sendBuf);
 
             free(escapedBuffer);
 
@@ -69,7 +68,6 @@ void flushBuffer(MessageBuffer* mb, SOCKET sock) {
         snprintf(sendBuf, sizeof(sendBuf), "PRIVMSG %s :%s\r\n", mb->target, escapedBuffer);
 
         send(sock, sendBuf, (int)strlen(sendBuf), 0);
-        bot_log("Send :\n%s\n", escapedBuffer);
 
         free(escapedBuffer);
 
